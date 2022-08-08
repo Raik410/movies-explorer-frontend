@@ -1,0 +1,51 @@
+.search-form__container {
+    display: flex;
+    margin-top: 31px;
+    gap: 12px;
+    align-items: center;
+}
+
+.search-form__container-text {
+    font-weight: 400;
+    font-size: 12px;
+    line-height: 18px;
+    margin: 0;
+}
+
+.search-form__container-checkbox {
+    position: absolute;
+    z-index: -1;
+    opacity: 0;
+}
+
+.search-form__container-checkbox+.search-form__container-label {
+    display: inline-flex;
+    align-items: center;
+    user-select: none;
+}
+.search-form__container-checkbox+.search-form__container-label::before {
+    content: '';
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    background-image: url("../../../src/images/smalltumb.svg");
+    cursor: pointer;
+}
+
+.search-form__container-checkbox:checked+.search-form__container-label::before {
+    content: '';
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    background-image: url("../../../src/images/smalltumb.svg");
+    cursor: pointer;
+}
+
+.search-form__container-checkbox:not(:checked)+.search-form__container-label::before {
+    content: '';
+    display: inline-block;
+    width: 36px;
+    height: 20px;
+    background-image: url("../../../src/images/smalltumboff.svg");
+    cursor: pointer;
+}

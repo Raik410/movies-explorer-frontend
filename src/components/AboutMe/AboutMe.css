@@ -1,0 +1,164 @@
+.about-me {
+    margin: 0 auto;
+    max-width: 1280px;
+    box-sizing: border-box;
+    padding: 110px 70px 100px 70px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.about-me__subtitle {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 18px;
+    line-height: 20px;
+    margin: 0;
+    padding-top: 18px;
+}
+
+.about-me__name {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 50px;
+    line-height: 58px;
+    margin: 0;
+    padding-top: 66px;
+}
+
+.about-me__chapter {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 27px;
+    margin: 0;
+    padding-bottom: 23px;
+    border-bottom: 1px solid black;
+}
+
+.about-me__about {
+    font-style: normal;
+    font-weight: 400;
+    font-size: 14px;
+    line-height: 22px;
+    margin: 0;
+    padding-top: 26px;
+    max-width: 550px;
+}
+
+.about-me__image {
+    width: 270px;
+    height: 327px;
+    border-radius: 10px;
+    align-self: flex-end;
+    overflow: hidden;
+    position: absolute;
+    top: 226px;
+}
+
+.about-me__contact {
+    padding-top: 99px;
+}
+
+.about-me__contact-container {
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 20px;
+}
+
+.about-me__contact-item {
+    list-style-type: none;
+}
+
+.about-me__contact-item-text {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 17px;
+    margin: 0;
+    text-decoration: none;
+    color: black;
+    transition: linear .3s;
+}
+
+.about-me__contact-item-text:hover {
+    opacity: 0.7;
+}
+
+@media screen and (max-width: 1279px) {
+    .about-me {
+        padding: 90px 50px;
+    }
+    .about-me__about {
+        max-width: 364px;
+    }
+}
+
+@media screen and (max-width: 900px) {
+    .about-me__name {
+        font-weight: 400;
+        font-size: 40px;
+        line-height: 40px;
+    }
+    .about-me__subtitle {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .about-me__about {
+        font-weight: 500;
+        font-size: 12px;
+        line-height: 18px;
+    }
+    .about-me__contact-item-text {
+        font-weight: 500;
+        font-size: 14px;
+        line-height: 17px;
+    }
+    .about-me__image {
+        width: 255px;
+        height: 307px;
+    }
+}
+
+@media screen and (max-width: 767px) {
+    .about-me {
+        padding: 70px 14px 0;
+    }
+    .about-me__about {
+        max-width: 364px;
+    }
+    .about-me__chapter {
+        font-size: 18px;
+        line-height: 22px;
+    }
+    .about-me__name {
+        font-size: 30px;
+        line-height: 36px;
+        padding-top: 40px;
+    }
+    .about-me__subtitle {
+        font-size: 11px;
+        line-height: 16px;
+    }
+    .about-me__about {
+        font-size: 11px;
+        line-height: 16px;
+    }
+    .about-me__contact-item-text {
+        font-size: 14px;
+        line-height: 17px;
+    }
+    .about-me__image {
+        position: static;
+        width: 292px;
+        height: 352px;
+        align-self: center;
+        overflow: hidden;
+        margin-top: 60px;
+    }
+    .about-me__contact-container {
+        gap: 26px;
+    }
+}
