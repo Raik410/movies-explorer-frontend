@@ -1,8 +1,23 @@
-import React from 'react';
+import React, { useState } from 'react';
 import './Login.css';
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ onChangeValidation }) => {
+    const [inputEmail, setInputEmail] = useState('');
+    const [inputPassword, setInputPassword] = useState('');
+    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [isValidPassword, setIsValidPassword] = useState(false);
+    const [errorEmail, setErrorEmail] = useState('');
+    const [errorPassword, setErrorPassword] = useState('');
+
+    const handleChangeEmail = (e) => {
+        onChangeValidation(e, setInputEmail, setIsValidEmail, isValidEmail, setErrorEmail)
+    }
+
+    const handleChangePassword = (e) => {
+        onChangeValidation(e, setInputPassword, setIsValidPassword, isValidPassword, setErrorPassword)
+    }
+
     return (
         <section className='login'>
             <Link className='register__logo' to='/'>
@@ -11,13 +26,13 @@ const Login = () => {
                 </svg>
             </Link>
             <h1 className='login__title'>Рады видеть!</h1>
-            <form className='login__form'>
+            <form className='login__form' noValidate>
                 <label className='login__form-text'>E-mail</label>
-                <input className='login__form-input' placeholder='E-mail' type='email' />
-                <span className='login__form-error'></span>
+                <input required minLength='2' maxLength='20' value={inputEmail} onChange={handleChangeEmail} className='login__form-input' placeholder='E-mail' type='email' />
+                <span className='login__form-error'>{errorEmail}</span>
                 <label className='login__form-text'>Пароль</label>
-                <input className='login__form-input' placeholder='Пароль' type='password' />
-                <span className='login__form-error'></span>
+                <input required minLength='2' maxLength='20' value={inputPassword} onChange={handleChangePassword} className='login__form-input' placeholder='Пароль' type='password' />
+                <span className='login__form-error'>{errorPassword}</span>
                 <button className='login__form-button' type='submit'>Войти</button>
             </form>
             <div className='login__form-container'>

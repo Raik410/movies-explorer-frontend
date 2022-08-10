@@ -100,6 +100,16 @@
     transition: linear .3s;
 }
 
+.login__form-error {
+    font-weight: 400;
+    font-size: 10px;
+    line-height: 12px;
+    color: #EE3465;
+    min-height: 15px;
+    margin-bottom: 5px;
+    bottom: 20px;
+}
+
 .login__form-button:hover {
     opacity: 0.8;
 }
@@ -121,5 +131,10 @@
     }
     .login__form-button {
         margin-top: 157px;
+    }
+    .login__form-error {
+        font-weight: 400;
+        font-size: 10px;
+        line-height: 12px;
     }
 }

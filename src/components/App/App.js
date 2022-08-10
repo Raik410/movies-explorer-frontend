@@ -16,11 +16,18 @@ import SearchForm from "../SearchForm/SearchForm";
 
 function App() {
 
-    const [loggedIn, setLoggedIn] = useState(false);
+    const [loggedIn, setLoggedIn] = useState(true);
     const [isProfilePopupOpen, setIsProfilePopupOpen] = useState(false);
 
     const handleProfileOpen = () => {
         setIsProfilePopupOpen(!isProfilePopupOpen);
+    }
+
+    const handleChangeValidation = (e, setInput, setIsValid, isValid, setError) => {
+        const input = e.target;
+        setInput(input.value);
+        setIsValid(input.validity.valid);
+        !isValid ? setError(input.validationMessage) : setError('');
     }
 
   return (
@@ -39,14 +46,14 @@ function App() {
                   <Footer />
               </Route>
               <Route path='/signup'>
-                  <Register />
+                  <Register onChangeValidation={handleChangeValidation} />
               </Route>
               <Route path='/signin'>
-                  <Login />
+                  <Login onChangeValidation={handleChangeValidation} />
               </Route>
               <Route path='/profile'>
                   <Header isProfilePopupOpen={isProfilePopupOpen} handleProfileOpen={handleProfileOpen} loggedIn={loggedIn} white='header__white' />
-                  <Profile />
+                  <Profile onChangeValidation={handleChangeValidation} />
               </Route>
               <Route path='/saved-movies'>
                   <Header isProfilePopupOpen={isProfilePopupOpen} handleProfileOpen={handleProfileOpen} loggedIn={loggedIn} grayish='header__grayish' />

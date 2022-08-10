@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import './Register.css';
 import { Link } from 'react-router-dom';
-const Register = () => {
+const Register = ({ onChangeValidation }) => {
     const [inputName, setInputName] = useState('');
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
@@ -14,28 +14,27 @@ const Register = () => {
     const [errorPassword, setErrorPassword] = useState('');
 
     const handleChangeName = (e) => {
-        const input = e.target;
-        setInputName(input.value);
-        setIsValidName(input.validity.valid);
-        if (!isValidName) {
-            setErrorName(input.validationMessage);
-        } else {
-            setErrorName('')
-        }
+        // const input = e.target;
+        // setInputName(input.value);
+        // setIsValidName(input.validity.valid);
+        // !isValidName ? setErrorName(input.validationMessage) : setErrorName('')
+        onChangeValidation(e, setInputName, setIsValidName, isValidName, setErrorName)
     }
 
     const handleChangeEmail = (e) => {
-        const input = e.target;
-        setInputEmail(input.value);
-        setIsValidEmail(input.validity.valid);
-        !isValidEmail ? setErrorEmail(input.validationMessage) : setErrorEmail('');
+        // const input = e.target;
+        // setInputEmail(input.value);
+        // setIsValidEmail(input.validity.valid);
+        // !isValidEmail ? setErrorEmail(input.validationMessage) : setErrorEmail('');
+        onChangeValidation(e, setInputEmail, setIsValidEmail, isValidEmail, setErrorEmail)
     }
 
     const handleChangePassword = (e) => {
-        const input = e.target;
-        setInputPassword(input.value);
-        setIsValidPassword(input.validity.valid);
-        !isValidPassword ? setErrorPassword(input.validationMessage) : setErrorPassword('');
+        // const input = e.target;
+        // setInputPassword(input.value);
+        // setIsValidPassword(input.validity.valid);
+        // !isValidPassword ? setErrorPassword(input.validationMessage) : setErrorPassword('');
+        onChangeValidation(e, setInputPassword, setIsValidPassword, isValidPassword, setErrorPassword)
     }
 
     return (
