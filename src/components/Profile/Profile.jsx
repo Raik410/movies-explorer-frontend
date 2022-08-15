@@ -20,7 +20,7 @@ const Profile = ({ onChangeValidation }) => {
     }
 
     return (
-        <section className='profile'>
+        <main className='profile'>
             <h1 className='profile__title'>Привет, Виталий!</h1>
             <form onSubmit={event => event.preventDefault()} className='profile__form' noValidate>
                 <div className='profile__container'>
@@ -49,7 +49,7 @@ const Profile = ({ onChangeValidation }) => {
                     {editProfile
                         ? <button type='submit' className='profile__form-button'>Сохранить</button> :
                         <>
-                            <button onClick={() => setEditProfile(!editProfile)}
+                            <button type='button' onClick={() => setEditProfile(!editProfile)}
                                     className='profile__button'>Редактировать
                             </button>
                             <p className='profile__logout'>Выйти из аккаунта</p>
@@ -57,7 +57,7 @@ const Profile = ({ onChangeValidation }) => {
                     }
                 </div>
             </form>
-        </section>
+        </main>
     );
 };
 

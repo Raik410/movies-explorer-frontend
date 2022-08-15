@@ -3,7 +3,7 @@ import './MoviesButton.css';
 const MoviesButton = () => {
     return (
         <div className='movies-button'>
-            <button className='movies-button__btn'>Ещё</button>
+            <button type='button' className='movies-button__btn'>Ещё</button>
         </div>
     );
 };

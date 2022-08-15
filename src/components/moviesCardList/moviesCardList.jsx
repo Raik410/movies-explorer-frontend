@@ -1,10 +1,14 @@
-import React from 'react';
+import React, {useState} from 'react';
 import './moviesCardList.css';
+import Preloader from "../Preloader/Preloader";
 const MoviesCardList = ({ children }) => {
+
+    const [loading, setLoading] = useState(false);
+
     return (
-        <section className='movies-card-list'>
-            {children}
-        </section>
+        <main className='movies-card-list'>
+            {loading ? <Preloader /> : children}
+        </main>
     );
 };
 

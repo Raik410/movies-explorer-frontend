@@ -48,7 +48,7 @@ const Header = ({ gray, grayish, white, loggedIn, handleProfileOpen, isProfilePo
                         </NavLink>
                         <NavLink to='/signin'>
                             <li className='header__nav-items'>
-                                <button className='header__nav-items-button'>Войти</button>
+                                <button type='button' className='header__nav-items-button'>Войти</button>
                             </li>
                         </NavLink>
                     </ul>

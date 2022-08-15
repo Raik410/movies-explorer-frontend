@@ -14,7 +14,6 @@ import MoviesButton from "../MoviesButton/MoviesButton";
 import MoviesCardList from "../moviesCardList/moviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCard from "../MoviesCard/MoviesCard";
-import savedMovies from "../SavedMovies/SavedMovies";
 
 function App() {
 
@@ -44,7 +43,7 @@ function App() {
                   <Header isProfilePopupOpen={isProfilePopupOpen} handleProfileOpen={handleProfileOpen} loggedIn={loggedIn} grayish='header__grayish' />
                   <SearchForm />
                   <MoviesCardList>
-                      <MoviesCard />
+                      <MoviesCard savedMovie={true} />
                   </MoviesCardList>
                   <MoviesButton />
                   <Footer />
@@ -63,7 +62,7 @@ function App() {
                   <Header isProfilePopupOpen={isProfilePopupOpen} handleProfileOpen={handleProfileOpen} loggedIn={loggedIn} grayish='header__grayish' />
                   <SearchForm />
                   <MoviesCardList>
-                      <MoviesCard savedMovie={true} />
+                      <MoviesCard savedMovie={false} />
                   </MoviesCardList>
                   <Footer />
               </Route>

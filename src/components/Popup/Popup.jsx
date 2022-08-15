@@ -7,7 +7,7 @@ const Popup = ({ isProfilePopupOpen, handleProfileOpen }) => {
     return (
         <section className={`popup ${isProfilePopupOpen ? 'popup__open' : ''}`}>
             <div className='popup__container'>
-                <button onClick={handleProfileOpen} className='popup__container-close'></button>
+                <button type='button' onClick={handleProfileOpen} className='popup__container-close'></button>
                 <div className='popup__box'>
                     <NavLink onClick={handleProfileOpen} exact activeClassName='popup__nav-link_active' className='popup__nav-link' to='/'>Главная</NavLink>
                     <NavLink onClick={handleProfileOpen} activeClassName='popup__nav-link_active' className='popup__nav-link' to='/movies'>Фильмы</NavLink>

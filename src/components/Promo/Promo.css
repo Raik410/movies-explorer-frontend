@@ -78,13 +78,13 @@
 }
 
 .blue {
-    flex-basis: 228px;
+    flex-basis: 20%;
     background-color: #3456F3;
     color: white;
 }
 
 .gray {
-    flex-basis: 912px;
+    flex-basis: 80%;
     background-color: #F2F2F2;
 }
 
@@ -150,6 +150,9 @@
         font-size: 11px;
         line-height: 13px;
     }
+}
+
+@media screen and (max-width: 400px) {
     .blue {
         flex-basis: 100px;
     }
