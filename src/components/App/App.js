@@ -13,6 +13,8 @@ import Footer from "../Footer/Footer";
 import MoviesButton from "../MoviesButton/MoviesButton";
 import MoviesCardList from "../moviesCardList/moviesCardList";
 import SearchForm from "../SearchForm/SearchForm";
+import MoviesCard from "../MoviesCard/MoviesCard";
+import savedMovies from "../SavedMovies/SavedMovies";
 
 function App() {
 
@@ -41,7 +43,9 @@ function App() {
               <Route path='/movies'>
                   <Header isProfilePopupOpen={isProfilePopupOpen} handleProfileOpen={handleProfileOpen} loggedIn={loggedIn} grayish='header__grayish' />
                   <SearchForm />
-                  <MoviesCardList />
+                  <MoviesCardList>
+                      <MoviesCard />
+                  </MoviesCardList>
                   <MoviesButton />
                   <Footer />
               </Route>
@@ -58,7 +62,9 @@ function App() {
               <Route path='/saved-movies'>
                   <Header isProfilePopupOpen={isProfilePopupOpen} handleProfileOpen={handleProfileOpen} loggedIn={loggedIn} grayish='header__grayish' />
                   <SearchForm />
-                  <MoviesCardList />
+                  <MoviesCardList>
+                      <MoviesCard savedMovie={true} />
+                  </MoviesCardList>
                   <Footer />
               </Route>
               <Route path='*'>

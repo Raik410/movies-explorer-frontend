@@ -3,6 +3,7 @@
     max-width: 1280px;
     box-sizing: border-box;
     padding: 110px 70px;
+    background-color: #FAFAFA;
 }
 
 .promo__title {
@@ -89,13 +90,13 @@
 
 .white-lower {
     flex-basis: 228px;
-    background-color: white;
+    background-color: #FAFAFA;
     color: #A0A0A0;
 }
 
 .white-high {
     flex-basis: 912px;
-    background-color: white;
+    background-color: #FAFAFA;
     color: #A0A0A0;
 }
 

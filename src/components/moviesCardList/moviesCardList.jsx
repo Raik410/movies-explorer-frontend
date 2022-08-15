@@ -1,10 +1,9 @@
 import React from 'react';
-import MoviesCard from "../MoviesCard/MoviesCard";
 import './moviesCardList.css';
-const MoviesCardList = () => {
+const MoviesCardList = ({ children }) => {
     return (
         <section className='movies-card-list'>
-            <MoviesCard />
+            {children}
         </section>
     );
 };

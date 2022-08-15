@@ -109,6 +109,7 @@
 @media screen and (max-width: 767px) {
     .techs {
         padding: 70px 14px;
+        background-color: #FAFAFA;
     }
     .techs__chapter {
         font-weight: 400;
