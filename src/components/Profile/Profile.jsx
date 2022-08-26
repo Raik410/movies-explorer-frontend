@@ -1,7 +1,10 @@
-import React, {useState} from 'react';
+import React, { useContext, useState } from 'react';
 import './Profile.css';
+import { UserContext } from "../../context/userContext";
 
-const Profile = ({ onChangeValidation }) => {
+const Profile = ({ onChangeValidation, onSignOut, onUpdateProfile }) => {
+    const { email, name } = useContext(UserContext);
+
     const [editProfile, setEditProfile] = useState(false);
 
     const [inputName, setInputName] = useState('');
@@ -19,10 +22,18 @@ const Profile = ({ onChangeValidation }) => {
         onChangeValidation(e, setInputEmail, setIsValidEmail, isValidEmail, setErrorEmail)
     }
 
+    const handleUpdateProfile = (e) => {
+        e.preventDefault();
+        onUpdateProfile({
+            name: inputName,
+            email: inputEmail,
+        })
+    }
+
     return (
         <main className='profile'>
-            <h1 className='profile__title'>Привет, Виталий!</h1>
-            <form onSubmit={event => event.preventDefault()} className='profile__form' noValidate>
+            <h1 className='profile__title'>Привет, {name}!</h1>
+            <form onSubmit={handleUpdateProfile} className='profile__form' noValidate>
                 <div className='profile__container'>
                     <p className='profile__container-key'>Имя</p>
                     {editProfile
@@ -32,7 +43,7 @@ const Profile = ({ onChangeValidation }) => {
                             <span className='profile__form-error'>{errorName}</span>
                         </div>
                         :
-                        <p className='profile__container-value'>Виталий</p>}
+                        <p className='profile__container-value'>{name}</p>}
                 </div>
                 <div className='profile__container margin-top'>
                     <p className='profile__container-key'>E-mail</p>
@@ -43,7 +54,7 @@ const Profile = ({ onChangeValidation }) => {
                             <span className='profile__form-error top'>{errorEmail}</span>
                         </div>
                         :
-                        <p className='profile__container-value'>Nikita@mail.ru</p>}
+                        <p className='profile__container-value'>{email}</p>}
                 </div>
                 <div className='profile__box'>
                     {editProfile
@@ -52,7 +63,7 @@ const Profile = ({ onChangeValidation }) => {
                             <button type='button' onClick={() => setEditProfile(!editProfile)}
                                     className='profile__button'>Редактировать
                             </button>
-                            <p className='profile__logout'>Выйти из аккаунта</p>
+                            <p onClick={onSignOut} className='profile__logout'>Выйти из аккаунта</p>
                         </>
                     }
                 </div>

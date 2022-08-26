@@ -48,6 +48,9 @@
     z-index: 10;
     padding: 20px;
     box-sizing: border-box;
+    background-color: #FAFAFA;
+    margin: 0 auto;
+    max-width: 1280px;
 }
 
 .preloader__container {

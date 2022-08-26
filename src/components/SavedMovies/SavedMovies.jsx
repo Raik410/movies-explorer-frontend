@@ -1,18 +1,29 @@
-import React from 'react';
-import Header from "../Header/Header";
+import React, {useEffect, useState} from 'react';
 import MoviesCardList from "../moviesCardList/moviesCardList";
-import Footer from "../Footer/Footer";
-import MoviesCard from "../MoviesCard/MoviesCard";
+import SearchForm from "../SearchForm/SearchForm";
+import Preloader from "../Preloader/Preloader";
+import {getProfile} from "../utils/MainApi";
 
 const SavedMovies = () => {
+    const [preloader, setPreloader] = useState(false);
+    const [errorText, setErrorText] = useState('');
+    const [films, setFilms] = useState([]);
+
+    useEffect(() => {
+            // getProfile()
+            //     .then((data) => {setFilms(data)});
+            // console.log(films)
+    }, []);
+
     return (
-        <section className='saved-movies'>
-            <Header grayish='header__grayish' />
-            <MoviesCardList>
-                <MoviesCard />
-            </MoviesCardList>
-            <Footer />
-        </section>
+        <>
+            <SearchForm  />
+            {preloader && <Preloader />}
+            {!preloader && !errorText
+                &&
+                <MoviesCardList films={films} filmsRemains={[]}  />
+            }
+        </>
     );
 };
 

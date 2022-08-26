@@ -1,7 +1,8 @@
 import React, { useState } from 'react';
 import './Register.css';
 import { Link } from 'react-router-dom';
-const Register = ({ onChangeValidation }) => {
+import InfoToolTip from "../InfoToolTip/InfoToolTip";
+const Register = ({ onChangeValidation, onRegister }) => {
     const [inputName, setInputName] = useState('');
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
@@ -14,27 +15,24 @@ const Register = ({ onChangeValidation }) => {
     const [errorPassword, setErrorPassword] = useState('');
 
     const handleChangeName = (e) => {
-        // const input = e.target;
-        // setInputName(input.value);
-        // setIsValidName(input.validity.valid);
-        // !isValidName ? setErrorName(input.validationMessage) : setErrorName('')
         onChangeValidation(e, setInputName, setIsValidName, isValidName, setErrorName)
     }
 
     const handleChangeEmail = (e) => {
-        // const input = e.target;
-        // setInputEmail(input.value);
-        // setIsValidEmail(input.validity.valid);
-        // !isValidEmail ? setErrorEmail(input.validationMessage) : setErrorEmail('');
         onChangeValidation(e, setInputEmail, setIsValidEmail, isValidEmail, setErrorEmail)
     }
 
     const handleChangePassword = (e) => {
-        // const input = e.target;
-        // setInputPassword(input.value);
-        // setIsValidPassword(input.validity.valid);
-        // !isValidPassword ? setErrorPassword(input.validationMessage) : setErrorPassword('');
         onChangeValidation(e, setInputPassword, setIsValidPassword, isValidPassword, setErrorPassword)
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        onRegister({
+            name: inputName,
+            email: inputEmail,
+            password: inputPassword,
+        })
     }
 
     return (
@@ -45,7 +43,7 @@ const Register = ({ onChangeValidation }) => {
                 </svg>
             </Link>
             <h1 className='register__title'>Добро пожаловать!</h1>
-            <form onSubmit={(e) => e.preventDefault()} className='register__form' noValidate>
+            <form onSubmit={handleSubmit} className='register__form' noValidate>
                 <label className='register__form-text'>Имя</label>
                     <input minLength='2' required className='register__form-input' maxLength='20' value={inputName} onChange={handleChangeName} name='name' placeholder='Имя' type='text' />
                     <span className='register__form-error'>{errorName}</span>
@@ -55,7 +53,7 @@ const Register = ({ onChangeValidation }) => {
                 <label className='register__form-text'>Пароль</label>
                     <input minLength='2' required className='register__form-input' maxLength='20' value={inputPassword} onChange={handleChangePassword} name='password' placeholder='Пароль' type='password' />
                     <span className='register__form-error'>{errorPassword}</span>
-                <button disabled={!(isValidEmail && !isValidName && !isValidPassword)} className='register__form-button' type='submit'>Зарегистрироваться</button>
+                <button disabled={!(isValidEmail && isValidName && isValidPassword)} className='register__form-button' type='submit'>Зарегистрироваться</button>
                 <div className='register__form-container'>
                     <p className='register__form-container-text'>Уже зарегистрированы?</p>
                     <Link className='register__link' to='/signin'>Войти</Link>
