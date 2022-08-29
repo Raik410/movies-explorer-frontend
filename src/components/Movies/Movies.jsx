@@ -1,21 +1,29 @@
 import React, {useEffect, useState} from 'react';
 import SearchForm from "../SearchForm/SearchForm";
 import MoviesCardList from "../moviesCardList/moviesCardList";
-import MoviesButton from "../MoviesButton/MoviesButton";
-import MoviesCard from "../MoviesCard/MoviesCard";
 import {getMovies} from "../utils/MoviesApi";
 import Preloader from "../Preloader/Preloader";
+import {addMovies, deleteMovies, getMoviesMy} from "../utils/MainApi";
 
-const Movies = ({ savedMovies }) => {
+const Movies = () => {
+    // Фильмы
     const [films, setFilms] = useState([]);
+    // Кол-во фильмов под экран
     const [moviesCount, setMoviesCount] = useState([]);
-    const [filmsShowed, setFilmsShowed] = useState(null);
-    const [filterTumbler, setFilterTumbler] = useState(false);
+    // Фильмы которые показываются
+    const [filmsShowed, setFilmsShowed] = useState([]);
+    // Текст ошибки
     const [errorText, setErrorText] = useState('');
+    // Прелоадер
     const [preloader, setPreloader] = useState(false);
-    const [filmsFilterTumbler, setFilmsFilterTumbler] = useState([]);
-    const [filmsShowedFilterTumbler, setFilmsShowedFilterTumbler] = useState([]);
 
+    const [toggle, setToggle] = useState(false);
+
+    const [filmsSave, setFilmsSave] = useState([]);
+
+    const [filmsShort, setFilmsShort] = useState([]);
+
+    // Рассчитываем кол-во фильмов на страницу
     useEffect(() => {
         setMoviesCount(getMoviesCount());
         const resize = () => setMoviesCount(getMoviesCount());
@@ -26,6 +34,7 @@ const Movies = ({ savedMovies }) => {
         }
     }, [])
 
+    // Рассчитываем кол-во карточек на экран + добавление карточек
     const getMoviesCount = () => {
         let countMovies;
         const clientWidth = document.documentElement.clientWidth;
@@ -45,65 +54,109 @@ const Movies = ({ savedMovies }) => {
         return countMovies;
     }
 
-    const handleMoreFilms = () => {
-        const spliceFilms = films;
-        const newFilmsShowed = filmsShowed.concat(spliceFilms.splice(0, moviesCount[1]));
-        setFilmsShowed(newFilmsShowed);
-        setFilms(spliceFilms);
-    }
-
     async function handleSearchFilms(input) {
-        setFilterTumbler(false);
-        setPreloader(true);
-        localStorage.setItem('filterTumbler', false);
-        !input ? setErrorText('Поле пустое.') : setErrorText('');
-
+        setPreloader(true)
+        if (!input) {
+            setErrorText('Поле пустое');
+            setPreloader(false);
+        } else {
+            setErrorText('')
+        }
         try {
-            localStorage.setItem('inputFilms', input);
             const data = await getMovies();
-            let filterFilms = data.filter(({ nameRU }) => nameRU.toLowerCase().includes(input.toLowerCase()));
-            localStorage.setItem('filterFilms', filterFilms);
-            const spliceFilms = filterFilms.splice(0, moviesCount[0]);
-            setFilms(filterFilms);
-            setFilmsShowed(spliceFilms);
-        }
-        catch (err) {
-            setErrorText('Произошла ошибка сервера!');
-            setFilms([]);
-            localStorage.removeItem('inputFilms');
-            localStorage.removeItem('filterFilms');
-            localStorage.removeItem('filterTumbler');
-        }
-        finally {
+            const filterData = data.filter(({nameRU}) => nameRU.toLowerCase().includes(input.toLowerCase()));
+            const shortFilterData = filterData.filter(({duration}) => duration <= 40);
+            localStorage.setItem('input', input);
+            localStorage.setItem('toggle', toggle);
+            if (toggle) {
+                setFilms(shortFilterData);
+                setFilmsShowed(shortFilterData.splice(0, moviesCount[0]));
+            } else {
+                localStorage.setItem('films', JSON.stringify(filterData));
+                localStorage.setItem('filmsShowed', JSON.stringify(filterData.splice(0, moviesCount[0])))
+                setFilms(filterData);
+                setFilmsShowed(filterData.splice(0, moviesCount[0]));
+                setFilmsShort(shortFilterData.splice(0, moviesCount[0]))
+            }
+
+        } catch (err) {
+            console.log('Error', err)
+            localStorage.removeItem('films');
+        } finally {
             setPreloader(false);
         }
     }
 
-    async function handleChangeTumbler(tumbler) {
-        let filterDataShowed = [];
-        let filterData = [];
-
-        if (!tumbler) {
-            setFilmsFilterTumbler(films);
-            setFilmsShowedFilterTumbler(filmsShowed);
-            filterData = films.filter(({ duration }) => duration <= 40);
-            filterDataShowed = filmsShowed.filter(({ duration }) => duration <= 40);
-        } else {
-            filterData = filmsFilterTumbler;
-            filterDataShowed = filmsShowedFilterTumbler;
-        }
-
-        setFilmsShowed(filterDataShowed);
-        setFilms(filterData);
+    const handleShowMore = () => {
+        const filmsMore = filmsShowed.concat(films.splice(0, moviesCount[1]));
+        setFilmsShowed([...filmsMore]);
     }
+
+
+    // Функция добавления фильмов
+    async function handleAddFilm(film, isLiked) {
+        if (isLiked) {
+            const infoFilm = {
+                country: film.country || 'Неизвестно',
+                director: film.director,
+                duration: film.duration,
+                year: film.year,
+                description: film.description,
+                image: 'https://api.nomoreparties.co' + film.image.url,
+                trailerLink: film.trailerLink,
+                thumbnail: 'https://api.nomoreparties.co' + film.image.url,
+                movieId: film.id.toString(),
+                nameRU: film.nameRU,
+                nameEN: film.nameEN,
+            }
+            try {
+                await addMovies(infoFilm);
+                // const savedFilms = await getMovies();
+                // setFilmsSaved(savedFilms);
+            } catch (err) {
+                console.log('Ошибка добавления фильма', err);
+            }
+        } else {
+            try {
+                await deleteMovies(film._id);
+                // const savedFilms = await getMovies();
+                // setFilmsSaved(savedFilms);
+            } catch (err) {
+                console.log('Ошибка удаления фильма', err);
+            }
+        }
+    }
+
+    useEffect(() => {
+        getMoviesMy()
+            .then((data) => setFilmsSave(data))
+            .catch((err) => console.log('Error', err))
+
+        const localStorageFilms = localStorage.getItem('films');
+
+        if (localStorageFilms) {
+            const filterData = JSON.parse(localStorageFilms);
+            setFilms(filterData);
+            setFilmsShowed(filterData.splice(0, getMoviesCount()[0]));
+            setPreloader(false);
+            setFilmsShort(filterData.filter(({duration}) => duration <= 40));
+        }
+    }, [])
 
     return (
         <>
-            <SearchForm errorText={errorText} onSearchFirms={handleSearchFilms} handleChangeTumbler={handleChangeTumbler} />
-            {preloader && <Preloader />}
-            {filmsShowed !== null && !preloader && !errorText
+            <SearchForm setToggle={setToggle} toggle={toggle} errorText={errorText} onSearchFilms={handleSearchFilms}/>
+            {preloader && <Preloader/>}
+            {!preloader && !errorText
                 &&
-                <MoviesCardList handleMoreFilms={handleMoreFilms} films={filmsShowed} filmsRemains={films} />
+                <MoviesCardList handleAddFilm={handleAddFilm}
+                                onShowMore={handleShowMore}
+                                films={films}
+                                filmsSaved={filmsSave}
+                                filmsShowed={filmsShowed}
+                                toggle={toggle}
+                                filmsShort={filmsShort}
+                />
             }
         </>
     );

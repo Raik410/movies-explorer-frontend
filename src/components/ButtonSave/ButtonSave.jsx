@@ -1,6 +1,6 @@
 import React from 'react';
 
-const ButtonSave = ({ isLiked, onChangeLike}) => {
+const ButtonSave = ({ isLiked, onChangeLike }) => {
     return (
         <>
             {isLiked

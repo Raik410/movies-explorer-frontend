@@ -58,7 +58,7 @@ const Profile = ({ onChangeValidation, onSignOut, onUpdateProfile }) => {
                 </div>
                 <div className='profile__box'>
                     {editProfile
-                        ? <button type='submit' className='profile__form-button'>Сохранить</button> :
+                        ? <button disabled={!(isValidEmail && isValidName) && inputEmail !== email && inputName !== name} type='submit' className='profile__form-button'>Сохранить</button> :
                         <>
                             <button type='button' onClick={() => setEditProfile(!editProfile)}
                                     className='profile__button'>Редактировать

@@ -1,32 +1,47 @@
-import React, {useState} from 'react';
+import React from 'react';
 import './moviesCardList.css';
 import MoviesCard from "../MoviesCard/MoviesCard";
-import { useLocation } from "react-router-dom";
-const MoviesCardList = ({ films, handleMoreFilms, filmsRemains }) => {
+import {useLocation} from "react-router-dom";
 
-    const [loading, setLoading] = useState(false);
-    const { pathname } = useLocation();
+const MoviesCardList = ({
+                            films,
+                            filmsShowed,
+                            onShowMore,
+                            handleAddFilm,
+                            filmsSaved,
+                            toggle,
+                            filmsShort
+                        }) => {
+    const {pathname} = useLocation();
 
     return (
         <main className='movies-cards'>
-            {films.length > 0 ? (
-                <ul className="movies-card-list">
-                    {films.map((film) => (
+            <ul className="movies-card-list">
+                {toggle
+                    ? filmsShort.map((film) => (
                         <MoviesCard
                             key={film.id || film.movieId}
                             film={film}
+                            likeMovies={handleAddFilm}
+                            filmsSaved={filmsSaved}
                         />
-                    ))}
-                </ul>
-            ) : (
-                <div className="movies__card-text">Ничего не найдено</div>
-            )}
-
-            {filmsRemains.length > 0 && pathname !== '/saved-movies' && (
+                    )) : filmsShowed.map((film) => (
+                        <MoviesCard
+                            key={film.id || film.movieId}
+                            film={film}
+                            likeMovies={handleAddFilm}
+                            filmsSaved={filmsSaved}
+                        />
+                    ))
+                }
+            </ul>
+            {films.length > 0 && !toggle && pathname !== '/saved-movies' && (
                 <div className='movies-button'>
-                    <button onClick={handleMoreFilms} type='button' className='movies-button__btn'>Ещё</button>
-                </div>
-            )}
+                    <button onClick={onShowMore} type='button' className='movies-button__btn'>Ещё</button>
+                </div>)
+            }
+            {filmsShowed.length <= 0 && filmsShort.length <= 0 &&
+                <div className="movies__card-text">Ничего не найдено</div>}
         </main>
     );
 };

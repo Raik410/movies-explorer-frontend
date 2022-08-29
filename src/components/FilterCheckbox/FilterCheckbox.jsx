@@ -1,16 +1,22 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import './FilterCheckbox.css'
 
-const FilterCheckbox = ({ handleChangeTumbler, value, setTumbler, tumbler }) => {
+const FilterCheckbox = ({setToggle, toggle}) => {
 
     const onChangeTumbler = () => {
-        setTumbler(!tumbler);
-        handleChangeTumbler(tumbler);
+        setToggle(!toggle)
     }
+
+    const localStorageToggle = localStorage.getItem('toggle')
+
+    useEffect(() => {
+        setToggle(localStorageToggle === 'true')
+    }, [])
 
     return (
         <div className='search-form__container'>
-            <input value={value} onChange={onChangeTumbler} checked={value} id='happy' className='search-form__container-checkbox' type='checkbox'/>
+            <input value={toggle} onChange={onChangeTumbler} checked={toggle} id='happy'
+                   className='search-form__container-checkbox' type='checkbox'/>
             <label htmlFor='happy' className='search-form__container-label'></label>
             <p className='search-form__container-text'>Короткометражки</p>
         </div>
