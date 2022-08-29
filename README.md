@@ -1,4 +1,4 @@
-Ссылка на сайт: https://github.com/Raik410/movies-explorer-frontend/tree/level-3
+Ссылка на сайт: https://movies.me.nomoredomains.sbs/movies
 
 
 Пока что с addblock запросы пропадают в пустоту :(
