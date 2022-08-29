@@ -69,9 +69,11 @@ function App() {
         return updateProfile(name, email)
             .then((data) => {
                 setUser(data);
+                setInfoToolTip({isOpen: true, status: true, messageText: "Данные успешно изменены!"})
             })
             .catch((err) => {
                 console.log('Ошибка редактирования профиля', err)
+                setInfoToolTip({isOpen: true, status: false, messageText: "Что-то пошло не так."})
             })
     }
 
