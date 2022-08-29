@@ -16,11 +16,11 @@ const Movies = () => {
     const [errorText, setErrorText] = useState('');
     // Прелоадер
     const [preloader, setPreloader] = useState(false);
-
+    // Переключатель на short фильмы
     const [toggle, setToggle] = useState(false);
-
+    // Сохраненные фильмы
     const [filmsSave, setFilmsSave] = useState([]);
-
+    // Короткометражные фильмы
     const [filmsShort, setFilmsShort] = useState([]);
 
     // Рассчитываем кол-во фильмов на страницу
@@ -54,6 +54,7 @@ const Movies = () => {
         return countMovies;
     }
 
+    // Поиск фильмов
     async function handleSearchFilms(input) {
         setPreloader(true)
         if (!input) {
@@ -87,6 +88,7 @@ const Movies = () => {
         }
     }
 
+    // На кнопку ещё показываем больше фильмов
     const handleShowMore = () => {
         const filmsMore = filmsShowed.concat(films.splice(0, moviesCount[1]));
         setFilmsShowed([...filmsMore]);
@@ -111,22 +113,19 @@ const Movies = () => {
             }
             try {
                 await addMovies(infoFilm);
-                // const savedFilms = await getMovies();
-                // setFilmsSaved(savedFilms);
             } catch (err) {
                 console.log('Ошибка добавления фильма', err);
             }
         } else {
             try {
                 await deleteMovies(film._id);
-                // const savedFilms = await getMovies();
-                // setFilmsSaved(savedFilms);
             } catch (err) {
                 console.log('Ошибка удаления фильма', err);
             }
         }
     }
 
+    // Достаем сохранненые фильмы + сохраняем фильмы с локальное хранилище
     useEffect(() => {
         getMoviesMy()
             .then((data) => setFilmsSave(data))
