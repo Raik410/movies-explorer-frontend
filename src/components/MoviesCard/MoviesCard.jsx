@@ -4,7 +4,7 @@ import ButtonSave from "../ButtonSave/ButtonSave";
 import DeleteButton from "../DeleteButton/DeleteButton";
 import {useLocation} from "react-router-dom";
 
-const MoviesCard = ({film, likeMovies, filmsSaved}) => {
+const MoviesCard = ({film, likeMovies, filmsSaved, toggle}) => {
     // Добавленная ли карточка
     const [isLiked, setIsLiked] = useState(false);
     const {pathname} = useLocation();
@@ -34,7 +34,7 @@ const MoviesCard = ({film, likeMovies, filmsSaved}) => {
                 setIsLiked(false);
             }
         }
-    }, [pathname, film.id, filmsSaved]);
+    }, [pathname, toggle, film.id, filmsSaved]);
     return (
         <li className='movies-card'>
             <div className='movies-card__box'>

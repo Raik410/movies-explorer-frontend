@@ -85,7 +85,6 @@ function App() {
                     if (res) {
                         setUser(res);
                         setLoggedIn(true);
-                        history.push('/movies')
                     }
                 })
                 .catch((err) => console.log(`Ошибка токена ${err}`));
@@ -108,7 +107,10 @@ function App() {
 
     const signOut = () => {
         localStorage.removeItem('token');
-        history.push('/signin');
+        localStorage.removeItem('input');
+        localStorage.removeItem('toggle');
+        localStorage.removeItem('films');
+        history.push('/');
         setLoggedIn(false)
     }
 
@@ -134,7 +136,7 @@ function App() {
                         <Footer/>
                     </ProtectedRoute>
                     <Route path='/signup'>
-                        <Register onRegister={handleRegister} onChangeValidation={handleChangeValidation}/>
+                        <Register onLogin={handleLogin} onRegister={handleRegister} onChangeValidation={handleChangeValidation}/>
                     </Route>
                     <Route path='/signin'>
                         <Login onLogin={handleLogin} onChangeValidation={handleChangeValidation}/>

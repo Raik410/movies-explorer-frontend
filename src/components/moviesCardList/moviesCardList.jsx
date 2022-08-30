@@ -24,6 +24,7 @@ const MoviesCardList = ({
                             film={film}
                             likeMovies={handleAddFilm}
                             filmsSaved={filmsSaved}
+                            toggle={toggle}
                         />
                     )) : filmsShowed.map((film) => (
                         <MoviesCard
@@ -31,6 +32,7 @@ const MoviesCardList = ({
                             film={film}
                             likeMovies={handleAddFilm}
                             filmsSaved={filmsSaved}
+                            toggle={toggle}
                         />
                     ))
                 }

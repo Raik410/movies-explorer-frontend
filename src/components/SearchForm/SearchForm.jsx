@@ -1,9 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import './SearchForm.css';
 import FilterCheckbox from "../FilterCheckbox/FilterCheckbox";
+import {useLocation} from "react-router-dom";
 
-const SearchForm = ({onSearchFilms, errorText, handleChangeTumbler, toggle, setToggle}) => {
+const SearchForm = ({onSearchFilms, errorText, handleChangeTumbler, toggle, setToggle, onChangeToggle}) => {
     const [searchInput, setSearchInput] = useState('');
+
+    const { pathname } = useLocation();
 
     const searchFilms = (e) => {
         e.preventDefault();
@@ -19,7 +22,7 @@ const SearchForm = ({onSearchFilms, errorText, handleChangeTumbler, toggle, setT
     // }, [toggle])
 
     useEffect(() => {
-        setSearchInput(localStorage.getItem('input'))
+        pathname !== '/saved-movies' && setSearchInput(localStorage.getItem('input'))
     }, [])
 
     return (
@@ -30,8 +33,12 @@ const SearchForm = ({onSearchFilms, errorText, handleChangeTumbler, toggle, setT
                            className='search-form__input'/>
                     <button className='search-form__button' type='submit'>Найти</button>
                 </div>
-                <FilterCheckbox toggle={toggle} setToggle={setToggle} value={toggle}
-                                handleChangeTumbler={handleChangeTumbler}/>
+                <FilterCheckbox toggle={toggle}
+                                setToggle={setToggle}
+                                value={toggle}
+                                handleChangeTumbler={handleChangeTumbler}
+                                onChangeToggle={onChangeToggle}
+                />
                 {errorText && <p className='search-form-error'>{errorText}</p>}
             </form>
         </section>

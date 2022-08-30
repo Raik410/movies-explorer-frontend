@@ -10,6 +10,9 @@ const Login = ({ onChangeValidation, onLogin }) => {
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
 
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const inValidEmail = regex.test(inputEmail);
+
     const handleChangeEmail = (e) => {
         onChangeValidation(e, setInputEmail, setIsValidEmail, isValidEmail, setErrorEmail)
     }
@@ -36,12 +39,12 @@ const Login = ({ onChangeValidation, onLogin }) => {
             <h1 className='login__title'>Рады видеть!</h1>
             <form onSubmit={handleSubmit} className='login__form' noValidate>
                 <label className='login__form-text'>E-mail</label>
-                <input required minLength='2' maxLength='20' value={inputEmail} onChange={handleChangeEmail} className='login__form-input' placeholder='E-mail' type='email' />
+                <input required minLength='2' value={inputEmail} onChange={handleChangeEmail} className='login__form-input' placeholder='E-mail' type='email' />
                 <span className='login__form-error'>{errorEmail}</span>
                 <label className='login__form-text'>Пароль</label>
-                <input required minLength='2' maxLength='20' value={inputPassword} onChange={handleChangePassword} className='login__form-input' placeholder='Пароль' type='password' />
+                <input required minLength='2' maxLength='30' value={inputPassword} onChange={handleChangePassword} className='login__form-input' placeholder='Пароль' type='password' />
                 <span className='login__form-error'>{errorPassword}</span>
-                <button disabled={!(isValidEmail && isValidPassword)} className='login__form-button' type='submit'>Войти</button>
+                <button disabled={!(isValidEmail && isValidPassword && inValidEmail)} className='login__form-button' type='submit'>Войти</button>
             </form>
             <div className='login__form-container'>
                 <p className='login__form-container-text'>Ещё не зарегистрированы?</p>

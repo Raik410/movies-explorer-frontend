@@ -27,6 +27,7 @@
     line-height: 19px;
     color: #3456F3;
     margin-top: 184px;
+    cursor: pointer;
 }
 
 @media screen and (max-width: 1279px) {

@@ -69,12 +69,11 @@ const Movies = () => {
             const shortFilterData = filterData.filter(({duration}) => duration <= 40);
             localStorage.setItem('input', input);
             localStorage.setItem('toggle', toggle);
+            localStorage.setItem('films', JSON.stringify(filterData));
             if (toggle) {
                 setFilms(shortFilterData);
-                setFilmsShowed(shortFilterData.splice(0, moviesCount[0]));
+                setFilmsShowed(filterData);
             } else {
-                localStorage.setItem('films', JSON.stringify(filterData));
-                localStorage.setItem('filmsShowed', JSON.stringify(filterData.splice(0, moviesCount[0])))
                 setFilms(filterData);
                 setFilmsShowed(filterData.splice(0, moviesCount[0]));
                 setFilmsShort(shortFilterData.splice(0, moviesCount[0]))
@@ -86,6 +85,10 @@ const Movies = () => {
         } finally {
             setPreloader(false);
         }
+    }
+
+    const onChangeToggle = (toggleValue) => {
+        localStorage.setItem('toggle', toggleValue);
     }
 
     // На кнопку ещё показываем больше фильмов
@@ -109,16 +112,20 @@ const Movies = () => {
                 thumbnail: 'https://api.nomoreparties.co' + film.image.url,
                 movieId: film.id.toString(),
                 nameRU: film.nameRU,
-                nameEN: film.nameEN,
+                nameEN: film.nameEN || 'Неизвестно' || null,
             }
             try {
                 await addMovies(infoFilm);
+                const newFilmsSaved = await getMoviesMy();
+                setFilmsSave(newFilmsSaved);
             } catch (err) {
                 console.log('Ошибка добавления фильма', err);
             }
         } else {
             try {
                 await deleteMovies(film._id);
+                const newFilmsSaved = await getMoviesMy();
+                setFilmsSave(newFilmsSaved);
             } catch (err) {
                 console.log('Ошибка удаления фильма', err);
             }
@@ -135,16 +142,18 @@ const Movies = () => {
 
         if (localStorageFilms) {
             const filterData = JSON.parse(localStorageFilms);
+            const filterDataShowed = [...filterData];
+            const filterDataShort = [...filterData];
             setFilms(filterData);
-            setFilmsShowed(filterData.splice(0, getMoviesCount()[0]));
+            setFilmsShowed(filterDataShowed.splice(0, getMoviesCount()[0]));
             setPreloader(false);
-            setFilmsShort(filterData.filter(({duration}) => duration <= 40));
+            setFilmsShort(filterDataShort.filter(({duration}) => duration <= 40));
         }
     }, [])
 
     return (
         <>
-            <SearchForm setToggle={setToggle} toggle={toggle} errorText={errorText} onSearchFilms={handleSearchFilms}/>
+            <SearchForm onChangeToggle={onChangeToggle} setToggle={setToggle} toggle={toggle} errorText={errorText} onSearchFilms={handleSearchFilms}/>
             {preloader && <Preloader/>}
             {!preloader && !errorText
                 &&

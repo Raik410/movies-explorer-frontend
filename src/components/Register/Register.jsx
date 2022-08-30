@@ -1,8 +1,11 @@
-import React, { useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import './Register.css';
-import { Link } from 'react-router-dom';
+import {Link, useHistory} from 'react-router-dom';
 import InfoToolTip from "../InfoToolTip/InfoToolTip";
-const Register = ({ onChangeValidation, onRegister }) => {
+const Register = ({ onChangeValidation, onRegister, onLogin }) => {
+
+    const history = useHistory();
+
     const [inputName, setInputName] = useState('');
     const [inputEmail, setInputEmail] = useState('');
     const [inputPassword, setInputPassword] = useState('');
@@ -13,6 +16,9 @@ const Register = ({ onChangeValidation, onRegister }) => {
     const [errorName, setErrorName] = useState('');
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
+
+    const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    const inValidEmail = regex.test(inputEmail);
 
     const handleChangeName = (e) => {
         onChangeValidation(e, setInputName, setIsValidName, isValidName, setErrorName)
@@ -33,6 +39,14 @@ const Register = ({ onChangeValidation, onRegister }) => {
             email: inputEmail,
             password: inputPassword,
         })
+            .then(() => {
+                onLogin({
+                    email: inputEmail,
+                    password: inputPassword,
+                })
+                history.push('/movies');
+            })
+            .catch((err) => console.log('Error', err));
     }
 
     return (
@@ -45,15 +59,15 @@ const Register = ({ onChangeValidation, onRegister }) => {
             <h1 className='register__title'>Добро пожаловать!</h1>
             <form onSubmit={handleSubmit} className='register__form' noValidate>
                 <label className='register__form-text'>Имя</label>
-                    <input minLength='2' required className='register__form-input' maxLength='20' value={inputName} onChange={handleChangeName} name='name' placeholder='Имя' type='text' />
+                    <input minLength='2' required className='register__form-input' maxLength='30' value={inputName} onChange={handleChangeName} name='name' placeholder='Имя' type='text' />
                     <span className='register__form-error'>{errorName}</span>
                 <label className='register__form-text'>E-mail</label>
-                    <input minLength='2' required className='register__form-input' maxLength='35' value={inputEmail} onChange={handleChangeEmail} name='email' placeholder='E-mail' type='email' />
+                    <input minLength='2' required className='register__form-input' value={inputEmail} onChange={handleChangeEmail} name='email' placeholder='E-mail' type='email' />
                     <span className='register__form-error'>{errorEmail}</span>
                 <label className='register__form-text'>Пароль</label>
-                    <input minLength='2' required className='register__form-input' maxLength='20' value={inputPassword} onChange={handleChangePassword} name='password' placeholder='Пароль' type='password' />
+                    <input minLength='2' required className='register__form-input' maxLength='30' value={inputPassword} onChange={handleChangePassword} name='password' placeholder='Пароль' type='password' />
                     <span className='register__form-error'>{errorPassword}</span>
-                <button disabled={!(isValidEmail && isValidName && isValidPassword)} className='register__form-button' type='submit'>Зарегистрироваться</button>
+                <button disabled={!(isValidEmail && isValidName && isValidPassword && inValidEmail)} className='register__form-button' type='submit'>Зарегистрироваться</button>
                 <div className='register__form-container'>
                     <p className='register__form-container-text'>Уже зарегистрированы?</p>
                     <Link className='register__link' to='/signin'>Войти</Link>
