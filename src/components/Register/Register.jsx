@@ -17,6 +17,8 @@ const Register = ({ onChangeValidation, onRegister, onLogin }) => {
     const [errorEmail, setErrorEmail] = useState('');
     const [errorPassword, setErrorPassword] = useState('');
 
+    const [emailValid, setEmailValid] = useState(true);
+
     const regex = /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const inValidEmail = regex.test(inputEmail);
 

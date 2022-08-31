@@ -1,4 +1,4 @@
-import header from "../Header/Header";
+import header from "../components/Header/Header";
 
 const BASE_URL = 'https://api.movies.me.nomoredomains.xyz';
 

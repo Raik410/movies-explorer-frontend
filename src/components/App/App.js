@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import './App.css';
 import '../../vendor/Inter Web/inter.css';
-import {Route, Switch, useHistory} from "react-router-dom";
+import {Redirect, Route, Switch, useHistory, useLocation} from "react-router-dom";
 import Register from "../Register/Register";
 import Login from "../Login/Login";
 import NotFoundPage from "../NotFoundPage/NotFoundPage";
@@ -12,10 +12,11 @@ import Main from "../Main/Main";
 import Footer from "../Footer/Footer";
 import Movies from "../Movies/Movies";
 import SavedMovies from "../SavedMovies/SavedMovies";
-import {getProfile, login, register, token, updateProfile} from "../utils/MainApi";
+import {getProfile, login, register, token, updateProfile} from "../../utils/MainApi";
 import InfoToolTip from "../InfoToolTip/InfoToolTip";
 import {UserContext} from "../../context/userContext";
 import ProtectedRoute from "../ProtectedRouter/ProtectedRouter";
+import LoginRouter from "../LoginRouter/LoginRouter";
 
 function App() {
     // Стейты
@@ -46,8 +47,8 @@ function App() {
                 setInfoToolTip({isOpen: true, status: true, messageText: "Вы успешно зарегистрировались!"})
                 history.push('/signin')
             })
-            .catch(() => {
-                setInfoToolTip({isOpen: true, status: false, messageText: "Что-то пошло не так."})
+            .catch((err) => {
+                setInfoToolTip({isOpen: true, status: false, messageText: "Не удалось зарегистрироваться :(", err})
             })
     };
 
@@ -59,9 +60,11 @@ function App() {
                     tokenCheck();
                     return data;
                 }
+                setInfoToolTip({isOpen: true, status: true, messageText: "Вы успешно вошли!"})
             })
             .catch((err) => {
                 console.log('Ошибка входа', err)
+                setInfoToolTip({isOpen: true, status: true, messageText: `Ошибка входа!`})
             })
     }
 
@@ -73,7 +76,7 @@ function App() {
             })
             .catch((err) => {
                 console.log('Ошибка редактирования профиля', err)
-                setInfoToolTip({isOpen: true, status: false, messageText: "Что-то пошло не так."})
+                setInfoToolTip({isOpen: true, status: false, messageText: 'Ошибка редактирования профиля'})
             })
     }
 
@@ -135,12 +138,12 @@ function App() {
                         <Movies/>
                         <Footer/>
                     </ProtectedRoute>
-                    <Route path='/signup'>
+                    <LoginRouter loggedIn={loggedIn} path='/signup'>
                         <Register onLogin={handleLogin} onRegister={handleRegister} onChangeValidation={handleChangeValidation}/>
-                    </Route>
-                    <Route path='/signin'>
+                    </LoginRouter>
+                    <LoginRouter loggedIn={loggedIn} path='/signin'>
                         <Login onLogin={handleLogin} onChangeValidation={handleChangeValidation}/>
-                    </Route>
+                    </LoginRouter>
                     <ProtectedRoute loggedIn={loggedIn} path='/profile'>
                         <Header isProfilePopupOpen={isProfilePopupOpen} handleProfileOpen={handleProfileOpen}
                                 loggedIn={loggedIn} white='header__white'/>
