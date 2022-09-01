@@ -23,6 +23,7 @@ const SavedMovies = () => {
                 setAllFilms(data);
                 setFilmsShowed(data);
                 setFilmsShort(data.filter(({ duration }) => duration <= 40));
+                setServerErrorMessage('')
             } catch (err) {
                 console.log("Error", err);
                 setServerErrorMessage('Ошибка получения сохраненных фильмов!');
@@ -65,6 +66,7 @@ const SavedMovies = () => {
                 const newFilms = await getMoviesMy();
                 setFilmsShowed(newFilms);
                 setFilms(newFilms);
+                setServerErrorMessage('')
             } catch (err) {
                 setServerErrorMessage('Ошибка удаления фильма!');
                 console.log(`Ошибка удаления фильма`, err);

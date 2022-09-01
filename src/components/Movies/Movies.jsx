@@ -87,6 +87,7 @@ const Movies = () => {
             setFilms(filterData);
             setFilmsShowed(filterData.splice(0, moviesCount[0]));
             setFilmsShort(shortFilterDataCopy.splice(0, moviesCount[0]));
+            setServerErrorMessage('')
         } catch (err) {
             console.log("Ошибка получения выбранных фильмов", err);
             setServerErrorMessage('Ошибка получения выбранных фильмов');
@@ -104,7 +105,6 @@ const Movies = () => {
     const handleShowMore = () => {
         const filmsMore = filmsShowed.concat(films.splice(0, moviesCount[1]));
         setFilmsShowed(filmsMore);
-        console.log(films);
     };
 
     // Функция добавления фильмов
@@ -127,6 +127,7 @@ const Movies = () => {
                 await addMovies(infoFilm);
                 const newFilmsSaved = await getMoviesMy();
                 setFilmsSave(newFilmsSaved);
+                setServerErrorMessage('')
             } catch (err) {
                 console.log("Ошибка добавления фильма", err);
                 setServerErrorMessage("Ошибка добавления выбраного фильма");
@@ -136,6 +137,7 @@ const Movies = () => {
                 await deleteMovies(film._id);
                 const newFilmsSaved = await getMoviesMy();
                 setFilmsSave(newFilmsSaved);
+                setServerErrorMessage('')
             } catch (err) {
                 console.log("Ошибка удаления фильма", err);
                 setServerErrorMessage('Ошибка удаления фильма');
@@ -146,7 +148,10 @@ const Movies = () => {
     // Достаем сохранненые фильмы + сохраняем фильмы с локальное хранилище
     useEffect(() => {
         getMoviesMy()
-            .then((data) => setFilmsSave(data))
+            .then((data) => {
+                setFilmsSave(data)
+                setServerErrorMessage('')
+            })
             .catch((err) => {
                 console.log("Error", err)
                 setServerErrorMessage('Ошибка получения сохранненых фильмов');
