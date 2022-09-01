@@ -25,6 +25,8 @@ const Movies = () => {
 
     const [errorMessage, setErrorMessage] = useState("");
 
+    const [serverErrorMessage, setServerErrorMessage] = useState('');
+
 
     // Рассчитываем кол-во фильмов на страницу
     useEffect(() => {
@@ -86,7 +88,8 @@ const Movies = () => {
             setFilmsShowed(filterData.splice(0, moviesCount[0]));
             setFilmsShort(shortFilterDataCopy.splice(0, moviesCount[0]));
         } catch (err) {
-            console.log("Error", err);
+            console.log("Ошибка получения выбранных фильмов", err);
+            setServerErrorMessage('Ошибка получения выбранных фильмов');
             localStorage.removeItem("films");
         } finally {
             setPreloader(false);
@@ -126,6 +129,7 @@ const Movies = () => {
                 setFilmsSave(newFilmsSaved);
             } catch (err) {
                 console.log("Ошибка добавления фильма", err);
+                setServerErrorMessage("Ошибка добавления выбраного фильма");
             }
         } else {
             try {
@@ -134,6 +138,7 @@ const Movies = () => {
                 setFilmsSave(newFilmsSaved);
             } catch (err) {
                 console.log("Ошибка удаления фильма", err);
+                setServerErrorMessage('Ошибка удаления фильма');
             }
         }
     }
@@ -142,7 +147,10 @@ const Movies = () => {
     useEffect(() => {
         getMoviesMy()
             .then((data) => setFilmsSave(data))
-            .catch((err) => console.log("Error", err));
+            .catch((err) => {
+                console.log("Error", err)
+                setServerErrorMessage('Ошибка получения сохранненых фильмов');
+            });
 
         const localStorageFilms = localStorage.getItem("films");
 
@@ -169,6 +177,9 @@ const Movies = () => {
             {preloader && <Preloader />}
             {errorMessage && (
                 <div className="movies__card-text">Ничего не найдено</div>
+            )}
+            {serverErrorMessage && (
+                <div className="movies__card-text">{serverErrorMessage}</div>
             )}
             {!preloader && !errorText && (
                 <MoviesCardList

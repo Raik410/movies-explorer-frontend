@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import './Login.css';
-import { Link } from "react-router-dom";
+import {Link, useHistory} from "react-router-dom";
 
 const Login = ({ onChangeValidation, onLogin }) => {
     const [inputEmail, setInputEmail] = useState('');
@@ -26,7 +26,7 @@ const Login = ({ onChangeValidation, onLogin }) => {
         onLogin({
             email: inputEmail,
             password: inputPassword,
-        });
+        })
     }
 
     return (

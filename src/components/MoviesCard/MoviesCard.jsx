@@ -14,7 +14,7 @@ const MoviesCard = ({film, likeMovies, filmsSaved, toggle}) => {
         const savedFilm = filmsSaved.filter((filmSaved) => {
             return filmSaved.movieId == film.id;
         })
-        setIsLiked(!isLiked)
+        // setIsLiked(!isLiked)
         likeMovies({...film, _id: savedFilm.length > 0 ? savedFilm[0]._id : null}, !isLiked);
     }
 

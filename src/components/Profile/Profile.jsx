@@ -1,4 +1,4 @@
-import React, {useContext, useState} from "react";
+import React, {useContext, useEffect, useState} from "react";
 import "./Profile.css";
 import {UserContext} from "../../context/userContext";
 
@@ -7,10 +7,10 @@ const Profile = ({onChangeValidation, onSignOut, onUpdateProfile}) => {
     console.log(email, name)
     const [editProfile, setEditProfile] = useState(false);
 
-    const [inputName, setInputName] = useState(!editProfile ? name : "");
-    const [inputEmail, setInputEmail] = useState(!editProfile ? email : "");
-    const [isValidName, setIsValidName] = useState(false);
-    const [isValidEmail, setIsValidEmail] = useState(false);
+    const [inputName, setInputName] = useState(name);
+    const [inputEmail, setInputEmail] = useState(email);
+    const [isValidName, setIsValidName] = useState(true);
+    const [isValidEmail, setIsValidEmail] = useState(true);
     const [errorName, setErrorName] = useState("");
     const [errorEmail, setErrorEmail] = useState("");
 
@@ -91,7 +91,7 @@ const Profile = ({onChangeValidation, onSignOut, onUpdateProfile}) => {
                 <div className="profile__box">
                     {editProfile && (
                         <button
-                            disabled={!(isValidEmail && isValidName && inValidEmail && (email !== inputEmail || name !== inputName))}
+                            disabled={!(isValidName && inValidEmail && (email !== inputEmail || name !== inputName))}
                             type="submit"
                             className="profile__form-button"
                         >

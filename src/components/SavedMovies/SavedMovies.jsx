@@ -13,6 +13,7 @@ const SavedMovies = () => {
     const [toggle, setToggle] = useState(false);
     const [filmsShort, setFilmsShort] = useState([]);
     const [errorMessage, setErrorMessage] = useState("");
+    const [serverErrorMessage, setServerErrorMessage] = useState('');
 
     useEffect(() => {
         const getMoviesSave = async () => {
@@ -24,6 +25,7 @@ const SavedMovies = () => {
                 setFilmsShort(data.filter(({ duration }) => duration <= 40));
             } catch (err) {
                 console.log("Error", err);
+                setServerErrorMessage('Ошибка получения сохраненных фильмов!');
             } finally {
                 setPreloader(false);
             }
@@ -64,6 +66,7 @@ const SavedMovies = () => {
                 setFilmsShowed(newFilms);
                 setFilms(newFilms);
             } catch (err) {
+                setServerErrorMessage('Ошибка удаления фильма!');
                 console.log(`Ошибка удаления фильма`, err);
             }
         }
@@ -81,6 +84,9 @@ const SavedMovies = () => {
             {preloader && <Preloader />}
             {errorMessage && (
                 <div className="movies__card-text">Ничего не найдено</div>
+            )}
+            {serverErrorMessage && (
+                <div className="movies__card-text">{serverErrorMessage}</div>
             )}
             {!preloader && !errorText && (
                 <MoviesCardList

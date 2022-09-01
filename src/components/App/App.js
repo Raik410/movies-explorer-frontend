@@ -45,7 +45,11 @@ function App() {
         return register(name, email, password)
             .then(() => {
                 setInfoToolTip({isOpen: true, status: true, messageText: "Вы успешно зарегистрировались!"})
-                history.push('/signin')
+                // history.push('/signin')
+                handleLogin({email, password})
+                setTimeout(() => {
+                    history.push('/movies')
+                }, 150)
             })
             .catch((err) => {
                 setInfoToolTip({isOpen: true, status: false, messageText: "Не удалось зарегистрироваться :(", err})
@@ -58,6 +62,9 @@ function App() {
                 if (data.token) {
                     localStorage.setItem('token', data.token);
                     tokenCheck();
+                    setTimeout(() => {
+                        history.push('/movies')
+                    }, 150)
                     return data;
                 }
                 setInfoToolTip({isOpen: true, status: true, messageText: "Вы успешно вошли!"})
@@ -86,8 +93,8 @@ function App() {
             token(jwt)
                 .then((res) => {
                     if (res) {
+                        setLoggedIn(true)
                         setUser(res);
-                        setLoggedIn(true);
                     }
                 })
                 .catch((err) => console.log(`Ошибка токена ${err}`));

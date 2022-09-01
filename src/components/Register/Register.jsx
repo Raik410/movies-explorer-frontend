@@ -41,14 +41,6 @@ const Register = ({ onChangeValidation, onRegister, onLogin }) => {
             email: inputEmail,
             password: inputPassword,
         })
-            .then(() => {
-                onLogin({
-                    email: inputEmail,
-                    password: inputPassword,
-                })
-                history.push('/movies');
-            })
-            .catch((err) => console.log('Error', err));
     }
 
     return (
