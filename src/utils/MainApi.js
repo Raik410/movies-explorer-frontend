@@ -1,6 +1,6 @@
 import header from "../components/Header/Header";
 
-const BASE_URL = 'https://api.movies.me.nomoredomains.xyz';
+const BASE_URL = 'https://api.movies.nik.nomoredomains.sbs';
 
 const handleResponse = (response) =>
     response.ok ? response.json() : Promise.reject(`Ошибка: ${response.status}`);
