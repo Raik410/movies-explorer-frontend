@@ -10,10 +10,9 @@
 - HTML
 - CSS 
 - JS
-- React, ReactRouterDom
-- NodeJS
-- express
-- mongoDB
+- React
+- ReactRouterDom
+
 
 
 ## [Сам проект можно посмотреть тут](https://movies.me.nomoredomains.sbs/movies)
