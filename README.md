@@ -1,6 +1,21 @@
-Ссылка на сайт: https://movies.me.nomoredomains.sbs/movies
+# movies-explorer-frontend
 
-Ссылка на пулл реквест: https://github.com/Raik410/movies-explorer-frontend/pull/2
+Лицевая (front-end) часть дипломной работы.
+
+## Функциональность 
+
+На данном сайте вы можете посмотреть моё портфолио, а также найти небольшое количество фильмов.
+
+Из стека тут используется: 
+- HTML
+- CSS 
+- JS
+- React, ReactRouterDom
+- NodeJS
+- express
+- mongoDB
 
 
-Пока что с addblock запросы пропадают в пустоту :(
+## [Сам проект можно посмотреть тут](https://movies.me.nomoredomains.sbs/movies)
+
+
