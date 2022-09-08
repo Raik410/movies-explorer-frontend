@@ -3,6 +3,7 @@
     margin-top: 31px;
     gap: 12px;
     align-items: center;
+    transition: all .4s ease-in;
 }
 
 .search-form__container-text {
@@ -10,18 +11,21 @@
     font-size: 12px;
     line-height: 18px;
     margin: 0;
+    transition: all .4s ease-in;
 }
 
 .search-form__container-checkbox {
     position: absolute;
     z-index: -1;
     opacity: 0;
+    transition: all .4s ease-in;
 }
 
 .search-form__container-checkbox+.search-form__container-label {
     display: inline-flex;
     align-items: center;
     user-select: none;
+    transition: all .4s ease-in;
 }
 .search-form__container-checkbox+.search-form__container-label::before {
     content: '';
@@ -30,6 +34,7 @@
     height: 20px;
     background-image: url("../../../src/images/smalltumb.svg");
     cursor: pointer;
+    transition: all .4s ease-in;
 }
 
 .search-form__container-checkbox:checked+.search-form__container-label::before {
@@ -39,6 +44,7 @@
     height: 20px;
     background-image: url("../../../src/images/smalltumb.svg");
     cursor: pointer;
+    transition: all .4s ease-in;
 }
 
 .search-form__container-checkbox:not(:checked)+.search-form__container-label::before {
@@ -48,4 +54,5 @@
     height: 20px;
     background-image: url("../../../src/images/smalltumboff.svg");
     cursor: pointer;
+    transition: all .4s ease-in;
 }

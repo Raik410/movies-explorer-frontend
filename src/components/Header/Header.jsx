@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import './Header.css';
 import { Link, NavLink } from 'react-router-dom';
 import ButtonProfile from "../ButtonProfile/ButtonProfile";
-import Popup from "../Popup/Popup";
 
-const Header = ({ gray, grayish, white, loggedIn, handleProfileOpen, isProfilePopupOpen }) => {
+const Header = ({ gray, grayish, white, loggedIn, handleProfileOpen }) => {
 
     return (
         <section className={`header ${gray} ${grayish} ${white}`}>
